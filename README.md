@@ -23,3 +23,76 @@ ALTER TABLE amazon_delivery
     CHANGE `COL 16` `Category` TEXT;
 
 DELETE FROM amazon_delivery LIMIT 1;
+
+
+Warto uzyskać pewne statystyki dotyczące danych, np. liczba wierszy:
+SELECT COUNT(*) FROM nazwa_tabeli;
+
+Sprawdzam czy Order_ID ma unikalne wartości 
+
+SELECT Order_ID, COUNT(*)
+FROM amazon_delivery
+GROUP BY Order_ID
+HAVING COUNT(*) > 1;
+
+Sprawdzenia poprawności danych :
+SELECT
+    `Agent_Age`,
+    `Agent_Rating`,
+    `Weather`,
+    `Trafic`,
+    `Vehicle`,
+    `Area`,
+    `Delivery_Time`,
+    `Category`,
+    COUNT(*) as Unique_value
+FROM
+    amazon_delivery
+GROUP BY
+    `Agent_Age`,
+    `Agent_Rating`,
+    `Weather`,
+    `Trafic`,
+    `Vehicle`,
+    `Area`,
+    `Delivery_Time`,
+    `Category`; 
+
+Agent_Raiting ma wartości 0 a weather wartości Nan 
+
+Sprawdzam które wartości mają 0 oraz nan 
+SELECT * FROM amazon_delivery WHERE `Agent_Rating` = 0;
+
+SELECT *
+FROM amazon_delivery
+WHERE Weather = 'NaN';
+
+Agent_Raiting zamieniamy na średnią wartość kolumny agent_rating
+Najpierw obliczamy średnią wartość agent_rating ignorując wartość 0;
+
+SELECT ROUND(AVG(Agent_Rating),1) AS avg_rating
+FROM amazon_delivery
+WHERE Agent_Rating != 0;
+
+Dajemy updaty tej liczby : 
+UPDATE amazon_delivery
+SET Agent_Rating = (SELECT AVG(Agent_Rating) FROM amazon_delivery WHERE Agent_Rating != 0)
+WHERE Agent_Rating = 0;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/86144f93-6797-4d24-ad80-276675ddf87b)
+
+Zamieniamy wartość NaN na najczęściej powtarzająca się wartość 
+SELECT `Weather`, COUNT(*) AS cnt
+FROM amazon_delivery
+WHERE `Weather` != 'NaN'
+GROUP BY `Weather`
+ORDER BY cnt DESC
+LIMIT 1;
+
+Najczęściej wybierany jest FOG
+
+UPDATE amazon_delivery
+SET `Weather` = 'Fog'
+WHERE `Weather` = 'NaN';
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/fd72b58b-8406-4e71-8533-a91323c3a6be)
