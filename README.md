@@ -96,3 +96,36 @@ SET `Weather` = 'Fog'
 WHERE `Weather` = 'NaN';
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/fd72b58b-8406-4e71-8533-a91323c3a6be)
+
+Dystrybucja ze względu na wiek;
+SELECT `Agent_Age`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age`;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/19ad98f5-e942-4eae-9d5b-4c38dbf41858)
+
+Najmniej mamy agentów wieku 15 i 50 lat
+
+Sprawdzamy jaka jest ocena agenta ze względu na wiek; 
+SELECT `Agent_Age`,`Agent_Rating`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age` ORDER BY `Agent_Rating`;
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/cc0e8efd-11b2-4b89-85db-d5cd21deac7e)
+
+Jaka najczęściej występuje pogoda :
+SELECT `Weather`, COUNT(*) FROM amazon_delivery GROUP BY `Weather`;
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/2cf9e821-ff9b-4fc5-9df2-f41e11643a65)
+
+Najczęściej występujący pojazd 
+SELECT `Vehicle`, COUNT(*) FROM amazon_delivery GROUP BY `Vehicle`;
+
+Najczęściej występujący ruch drogowy; 
+SELECT `Trafic`, COUNT(*) FROM amazon_delivery GROUP BY `Trafic`;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/8fc67336-feea-476b-9fef-5def83bff2e6)
+
+Zamawiane kategorie; 
+SELECT `Category`, COUNT(*) FROM amazon_delivery GROUP BY `Category`;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/3033b02a-a0b1-4e47-b9bc-c5fa0ac84a8d)
+
+Zacznij analize poszczególnych danych według gpt
+
+
+
