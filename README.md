@@ -108,6 +108,11 @@ Sprawdzamy jaka jest ocena agenta ze względu na wiek;
 SELECT `Agent_Age`,`Agent_Rating`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age` ORDER BY `Agent_Rating`;
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/cc0e8efd-11b2-4b89-85db-d5cd21deac7e)
 
+Średni czas dostawy ze względu na pojazd 
+SELECT `Vehicle`, ROUND(AVG(`Delivery_Time`),2) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Vehicle`;
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/91ab5008-5d73-4db4-b274-48fced37eca1)
+
+
 Jaka najczęściej występuje pogoda :
 SELECT `Weather`, COUNT(*) FROM amazon_delivery GROUP BY `Weather`;
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/2cf9e821-ff9b-4fc5-9df2-f41e11643a65)
@@ -125,7 +130,63 @@ SELECT `Category`, COUNT(*) FROM amazon_delivery GROUP BY `Category`;
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/3033b02a-a0b1-4e47-b9bc-c5fa0ac84a8d)
 
-Zacznij analize poszczególnych danych według gpt
+Średni czas dostawy ze względu na kategorię; 
+SELECT `Category`, AVG(`Delivery_Time`) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Category` ORDER BY Avg_Delivery_Time;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/2e2c680b-f7ae-4409-8d26-58de24e743c3)
+
+Średnia ocena agenta dla różnych typów pojazdów:
+SELECT `Vehicle`, ROUND(AVG(`Agent_Rating`),2) AS Avg_Agent_Rating FROM amazon_delivery GROUP BY `Vehicle`;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/f0560125-75be-416b-b0bd-0bb7f47b37be)
+
+Czas dostawy w zależności od stanu ruchu drogowego:
+SELECT `Trafic`, ROUND(AVG(`Delivery_Time`), 2) as Avg_Delivery_Time FROM amazon_delivery GROUP BY `Trafic`;
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/6c30d436-c916-4a12-ad8a-5f010b6f7ed0)
+
+Średni czas dostawy dla różnych typów obszarów:
+SELECT `Area`, ROUND(AVG(`Delivery_Time`),2) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Area`;
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/97108c47-7bf4-4017-b0a6-71a3fd3e93d9)
+
+
+
+Analiza wpływu pogody i ruchu drogowego na czas dostawy:
+
+SELECT `Weather`, `Trafic`, AVG(`Delivery_Time`) as Avg_Delivery_Time
+FROM amazon_delivery
+GROUP BY `Weather`, `Trafic`
+ORDER BY `Avg_Delivery_Time` DESC;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/d9db94d4-a6e7-40bf-8e41-fd3179ae10f3)
+
+najczęściej występujące kombinacje pogody i stanu ruchu dla dostaw, które przekroczyły średni czas dostawy:
+
+WITH AverageDelivery AS (
+    SELECT AVG(`Delivery_Time`) as Avg_Delivery_Time
+    FROM amazon_delivery
+)
+SELECT `Weather`, `Trafic`, COUNT(*) as Occurrences
+FROM amazon_delivery, AverageDelivery
+WHERE `Delivery_Time` > `Avg_Delivery_Time`
+GROUP BY `Weather`, `Trafic`
+ORDER BY Occurrences DESC;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/8b5954d2-6832-48cf-b72b-30a1a3d10e81)
+
+Analiza korelacji między czasem dostawy a oceną agenta:
+SELECT `Agent_Rating`, ROUND(AVG(Delivery_Time),2) as Avg_Delivery_Time
+FROM amazon_delivery
+GROUP BY `Agent_Rating`
+ORDER BY `Avg_Delivery_Time`;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/e98b04bc-d260-4c19-af21-950bcca54cbe)
+
+Segmentacja klientów na podstawie średniego czasu dostawy i oceny agenta: ogarnij to ! 
+
+
+
+
+
 
 
 
