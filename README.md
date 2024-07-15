@@ -139,15 +139,23 @@ WHERE `Weather` = 'NaN';
 --Distribution by age;
 SELECT `Agent_Age`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age`;
 ```
-Most agents are in the age range of 20-39 years. However, the fewest are aged 15 and 50 years.
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/19ad98f5-e942-4eae-9d5b-4c38dbf41858)
 
-Najmniej mamy agentów wieku 15 i 50 lat
+Most agents are in the age range of 20-39 years. However, the fewest are aged 15 and 50 years.
 
-Sprawdzamy jaka jest ocena agenta ze względu na wiek; 
-SELECT `Agent_Age`,`Agent_Rating`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age` ORDER BY `Agent_Rating`;
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/cc0e8efd-11b2-4b89-85db-d5cd21deac7e)
+```sql
+--Agent rating by age 
+SELECT `Agent_Age`, `Agent_Rating`, COUNT(*) AS Result
+FROM amazon_delivery
+GROUP BY `Agent_Age`
+HAVING `Agent_Rating` > 4.5
+ORDER BY `Agent_Age`;
+```
+
+![obraz](https://github.com/user-attachments/assets/b3f64756-ceea-4ab0-88e4-bff90c79343c)
+
+he majority of agents who have a rating higher than 4.5 are in the age range older than 24 years.
 
 Średni czas dostawy ze względu na pojazd 
 SELECT `Vehicle`, ROUND(AVG(`Delivery_Time`),2) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Vehicle`;
