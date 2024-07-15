@@ -1,7 +1,29 @@
-# Amazon-delivery
+# Amazon delivery
+In this project, we will examine data related to Amazon deliveries. The dataset includes information about agent ratings, geographical locations, agent ages, types of vehicles used, current weather conditions, and road conditions. Based on this data, we will analyze various trends that impact delivery performance.
 
-Po wgraniu dataset nazwy kolumn wczytały się w pierwszym wierszu więc zamieniamy pierwszy wiersz na nazwy kolumn. 
+**Columns:**
+- **Order_ID**: Unique identifier for the order.
+- **Agent_Age**: Age of the delivery agent.
+- **Agent_Rating**: Rating of the delivery agent.
+- **Store_Latitude**: Latitude of the store.
+- **Store_Longitude**: Longitude of the store.
+- **Drop_Latitude**: Latitude of the delivery location.
+- **Drop_Longitude**: Longitude of the delivery location.
+- **Order_Date**: Date when the order was placed.
+- **Order_Time**: Time when the order was placed.
+- **Pickup_Time**: Time when the order was picked up for delivery.
+- **Weather**: Weather conditions during the delivery.
+- **Trafic**: Traffic conditions during the delivery.
+- **Vehicle**: Type of vehicle used for the delivery.
+- **Area**: Area where the delivery took place.
+- **Delivery_Time**: Time taken to deliver the order.
+- **Category**: Category of the order.
 
+## Initial Queries
+
+After uploading the dataset, column names were loaded in the first row, so we will change the first row into column names.
+
+```sql
 SELECT * FROM amazon_delivery LIMIT 1;
 
 ALTER TABLE amazon_delivery 
@@ -23,19 +45,27 @@ ALTER TABLE amazon_delivery
     CHANGE `COL 16` `Category` TEXT;
 
 DELETE FROM amazon_delivery LIMIT 1;
+```
 
 
-Warto uzyskać pewne statystyki dotyczące danych, np. liczba wierszy:
-SELECT COUNT(*) FROM nazwa_tabeli;
+* Performed a few initial queries to check the data and its accuracy; *
 
-Sprawdzam czy Order_ID ma unikalne wartości 
+```sql
+SELECT COUNT(*) FROM amazon_delivery;
+```
 
+To check if `Order_ID` has unique values:
+
+```sql
 SELECT Order_ID, COUNT(*)
 FROM amazon_delivery
 GROUP BY Order_ID
 HAVING COUNT(*) > 1;
+```
+*The query results indicated that each record is unique.
 
-Sprawdzenia poprawności danych :
+*Data validation check:*
+```sql
 SELECT
     `Agent_Age`,
     `Agent_Rating`,
@@ -45,7 +75,7 @@ SELECT
     `Area`,
     `Delivery_Time`,
     `Category`,
-    COUNT(*) as Unique_value
+    COUNT(*) AS Unique_value
 FROM
     amazon_delivery
 GROUP BY
@@ -56,9 +86,10 @@ GROUP BY
     `Vehicle`,
     `Area`,
     `Delivery_Time`,
-    `Category`; 
+    `Category`;
+```
 
-Agent_Raiting ma wartości 0 a weather wartości Nan 
+Agent_Rating has values of 0 and Weather has values of NaN.
 
 Sprawdzam które wartości mają 0 oraz nan 
 SELECT * FROM amazon_delivery WHERE `Agent_Rating` = 0;
@@ -130,10 +161,15 @@ SELECT `Category`, COUNT(*) FROM amazon_delivery GROUP BY `Category`;
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/3033b02a-a0b1-4e47-b9bc-c5fa0ac84a8d)
 
-Średni czas dostawy ze względu na kategorię; 
-SELECT `Category`, AVG(`Delivery_Time`) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Category` ORDER BY Avg_Delivery_Time;
+Średni czas dostawy ze względu na kategorię która jest powyżej 100 minut; 
+SELECT Category, ROUND(AVG(Delivery_Time),2) as avg_time
+FROM amazon_delivery
+GROUP BY Category
+HAVING AVG(Delivery_Time) > 100;
 
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/2e2c680b-f7ae-4409-8d26-58de24e743c3)
+![obraz](https://github.com/user-attachments/assets/0edf1a96-06ad-43ee-97a5-09ae60107336)
+
+
 
 Średnia ocena agenta dla różnych typów pojazdów:
 SELECT `Vehicle`, ROUND(AVG(`Agent_Rating`),2) AS Avg_Agent_Rating FROM amazon_delivery GROUP BY `Vehicle`;
