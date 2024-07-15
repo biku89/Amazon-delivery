@@ -48,7 +48,7 @@ DELETE FROM amazon_delivery LIMIT 1;
 ```
 
 
-* Performed a few initial queries to check the data and its accuracy; *
+* Performed a few initial queries to check the data and its accuracy; 
 
 ```sql
 SELECT COUNT(*) FROM amazon_delivery;
@@ -62,7 +62,7 @@ FROM amazon_delivery
 GROUP BY Order_ID
 HAVING COUNT(*) > 1;
 ```
-*The query results indicated that each record is unique.
+* The query results indicated that each record is unique *.
 
 *Data validation check:*
 ```sql
@@ -91,42 +91,49 @@ GROUP BY
 
 Agent_Rating has values of 0 and Weather has values of NaN.
 
-Sprawdzam które wartości mają 0 oraz nan 
+```sql
+-- Checking which values are 0 in Agent_Rating
 SELECT * FROM amazon_delivery WHERE `Agent_Rating` = 0;
 
-SELECT *
-FROM amazon_delivery
-WHERE Weather = 'NaN';
+-- Checking which values are 'NaN' in Weather
+SELECT * FROM amazon_delivery WHERE Weather = 'NaN';
 
-Agent_Raiting zamieniamy na średnią wartość kolumny agent_rating
-Najpierw obliczamy średnią wartość agent_rating ignorując wartość 0;
-
-SELECT ROUND(AVG(Agent_Rating),1) AS avg_rating
+-- Updating Agent_Rating to the average value of the Agent_Rating column
+-- First, calculating the average Agent_Rating excluding 0 values
+SELECT ROUND(AVG(Agent_Rating), 1) AS avg_rating
 FROM amazon_delivery
 WHERE Agent_Rating != 0;
 
-Dajemy updaty tej liczby : 
+-- Updating the values
 UPDATE amazon_delivery
 SET Agent_Rating = (SELECT AVG(Agent_Rating) FROM amazon_delivery WHERE Agent_Rating != 0)
 WHERE Agent_Rating = 0;
+```
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/86144f93-6797-4d24-ad80-276675ddf87b)
 
-Zamieniamy wartość NaN na najczęściej powtarzająca się wartość 
+*Zamieniamy wartość NaN na najczęściej powtarzająca się wartość* 
+```sql
 SELECT `Weather`, COUNT(*) AS cnt
 FROM amazon_delivery
 WHERE `Weather` != 'NaN'
 GROUP BY `Weather`
 ORDER BY cnt DESC
 LIMIT 1;
+```
 
-Najczęściej wybierany jest FOG
+"FOG" is the most frequently chosen option.
 
+```sql
 UPDATE amazon_delivery
 SET `Weather` = 'Fog'
 WHERE `Weather` = 'NaN';
+```
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/fd72b58b-8406-4e71-8533-a91323c3a6be)
+
+# Data Analysis
+** Once we have completed the data cleansing stage, we can proceed to the initial analysis. **
 
 Dystrybucja ze względu na wiek;
 SELECT `Agent_Age`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age`;
