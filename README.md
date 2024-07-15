@@ -112,7 +112,7 @@ WHERE Agent_Rating = 0;
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/86144f93-6797-4d24-ad80-276675ddf87b)
 
-*Zamieniamy wartość NaN na najczęściej powtarzająca się wartość* 
+*We replace the NaN value with the most frequently occurring value* 
 ```sql
 SELECT `Weather`, COUNT(*) AS cnt
 FROM amazon_delivery
@@ -133,10 +133,13 @@ WHERE `Weather` = 'NaN';
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/fd72b58b-8406-4e71-8533-a91323c3a6be)
 
 # Data Analysis
-** Once we have completed the data cleansing stage, we can proceed to the initial analysis. **
+**Once we have completed the data cleansing stage, we can proceed to the initial analysis.**
 
-Dystrybucja ze względu na wiek;
+```sql
+--Distribution by age;
 SELECT `Agent_Age`, COUNT(*) AS Result FROM amazon_delivery GROUP BY `Agent_Age`;
+```
+Most agents are in the age range of 20-39 years. However, the fewest are aged 15 and 50 years.
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/19ad98f5-e942-4eae-9d5b-4c38dbf41858)
 
