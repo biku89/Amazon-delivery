@@ -186,7 +186,8 @@ SELECT `Trafic`, COUNT(*) AS Trafic_Count FROM amazon_delivery GROUP BY `Trafic`
 -- The most frequently ordered categories.;
 SELECT `Category`, COUNT(*) AS Category_Count FROM amazon_delivery GROUP BY `Category`;
 ```
-![obraz](https://github.com/user-attachments/assets/caba6a3e-22ef-46e5-ab2f-c032120dabae)
+![obraz](https://github.com/user-attachments/assets/4d8752d1-00c5-4709-8493-a3ff166be05f)
+
 
 
 Średni czas dostawy ze względu na kategorię która jest powyżej 100 minut; 
