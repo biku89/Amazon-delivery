@@ -157,9 +157,8 @@ ORDER BY `Agent_Age`;
 
 he majority of agents who have a rating higher than 4.5 are in the age range older than 24 years.
 
-We will check which type of vehicle is chosen most frequently and what is the average delivery time by vehicle.
-
 ```sql
+-- We will check which type of vehicle is chosen most frequently and what is the average delivery time by vehicle.
 SELECT
     Vehicle,
     ROUND(AVG(Delivery_Time),2) AS Average_Delivery_Time,
@@ -177,22 +176,23 @@ ORDER BY
 The most frequently chosen vehicle is the motorcycle. However, the best delivery time is achieved by the scooter and van.
 
 
-
-Jaka najczęściej występuje pogoda :
+```sql
+-- The most frequent weather condition. 
 SELECT `Weather`, COUNT(*) FROM amazon_delivery GROUP BY `Weather`;
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/2cf9e821-ff9b-4fc5-9df2-f41e11643a65)
 
 
 
-Najczęściej występujący ruch drogowy; 
+-- The most frequent traffic condition. 
 SELECT `Trafic`, COUNT(*) FROM amazon_delivery GROUP BY `Trafic`;
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/8fc67336-feea-476b-9fef-5def83bff2e6)
 
-Zamawiane kategorie; 
+-- The most frequently ordered categories.;
 SELECT `Category`, COUNT(*) FROM amazon_delivery GROUP BY `Category`;
 
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/3033b02a-a0b1-4e47-b9bc-c5fa0ac84a8d)
+```
 
 Średni czas dostawy ze względu na kategorię która jest powyżej 100 minut; 
 SELECT Category, ROUND(AVG(Delivery_Time),2) as avg_time
