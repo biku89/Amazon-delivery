@@ -157,17 +157,32 @@ ORDER BY `Agent_Age`;
 
 he majority of agents who have a rating higher than 4.5 are in the age range older than 24 years.
 
-Średni czas dostawy ze względu na pojazd 
-SELECT `Vehicle`, ROUND(AVG(`Delivery_Time`),2) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Vehicle`;
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/91ab5008-5d73-4db4-b274-48fced37eca1)
+We will check which type of vehicle is chosen most frequently and what is the average delivery time by vehicle.
+
+```sql
+SELECT
+    Vehicle,
+    ROUND(AVG(Delivery_Time),2) AS Average_Delivery_Time,
+    COUNT(*) AS Vehicle_Count
+FROM
+    amazon_delivery
+GROUP BY
+    Vehicle
+ORDER BY
+    Vehicle_Count DESC;
+```
+
+![obraz](https://github.com/user-attachments/assets/2f8aaf2a-7d4e-4198-b83e-af6520e0b6d4)
+
+The most frequently chosen vehicle is the motorcycle. However, the best delivery time is achieved by the scooter and van.
+
 
 
 Jaka najczęściej występuje pogoda :
 SELECT `Weather`, COUNT(*) FROM amazon_delivery GROUP BY `Weather`;
 ![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/2cf9e821-ff9b-4fc5-9df2-f41e11643a65)
 
-Najczęściej występujący pojazd 
-SELECT `Vehicle`, COUNT(*) FROM amazon_delivery GROUP BY `Vehicle`;
+
 
 Najczęściej występujący ruch drogowy; 
 SELECT `Trafic`, COUNT(*) FROM amazon_delivery GROUP BY `Trafic`;
