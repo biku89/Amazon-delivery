@@ -188,47 +188,32 @@ SELECT `Category`, COUNT(*) AS Category_Count FROM amazon_delivery GROUP BY `Cat
 ```
 ![obraz](https://github.com/user-attachments/assets/4ffa1f59-cb49-4b7e-9ea5-91a6ff92a2a8) ![obraz](https://github.com/user-attachments/assets/b60f7069-7550-46f4-b80d-90698623c39d) ![obraz](https://github.com/user-attachments/assets/e6a9b6c9-539e-4101-b382-b1b8ec24ba60)
 
+```sql
+-- Average delivery time due to traffic and area.
+SELECT `Trafic`, `Area`, ROUND(AVG(`Delivery_Time`), 2) as Avg_Delivery_Time 
+FROM amazon_delivery 
+GROUP BY `Trafic`, `Area` 
+ORDER BY Avg_Delivery_Time;
+
+-- The correlation between weather and traffic on the average delivery time.
+SELECT `Trafic`, `Weather`, ROUND(AVG(`Delivery_Time`), 2) AS Avg_Delivery_Time
+FROM `amazon_delivery`
+GROUP BY `Trafic`, `Weather`
+HAVING Avg_Delivery_Time > 120
+ORDER BY Avg_Delivery_Time;
 
 
+```
+![obraz](https://github.com/user-attachments/assets/adc670ca-e3df-462e-a71a-131c7f17c3de)
 
+The area with the longest average delivery time is the semi-urban area with high, jam, and medium traffic.
 
+![obraz](https://github.com/user-attachments/assets/edc83350-cdcd-4f34-a220-3d80b2907e5c)
 
+Orders that had an average delivery time of more than 120 correlated with adverse weather conditions.
 
-Średni czas dostawy ze względu na kategorię która jest powyżej 100 minut; 
-SELECT Category, ROUND(AVG(Delivery_Time),2) as avg_time
-FROM amazon_delivery
-GROUP BY Category
-HAVING AVG(Delivery_Time) > 100;
-
-![obraz](https://github.com/user-attachments/assets/0edf1a96-06ad-43ee-97a5-09ae60107336)
-
-
-
-Średnia ocena agenta dla różnych typów pojazdów:
-SELECT `Vehicle`, ROUND(AVG(`Agent_Rating`),2) AS Avg_Agent_Rating FROM amazon_delivery GROUP BY `Vehicle`;
-
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/f0560125-75be-416b-b0bd-0bb7f47b37be)
-
-Czas dostawy w zależności od stanu ruchu drogowego:
-SELECT `Trafic`, ROUND(AVG(`Delivery_Time`), 2) as Avg_Delivery_Time FROM amazon_delivery GROUP BY `Trafic`;
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/6c30d436-c916-4a12-ad8a-5f010b6f7ed0)
-
-Średni czas dostawy dla różnych typów obszarów:
-SELECT `Area`, ROUND(AVG(`Delivery_Time`),2) AS Avg_Delivery_Time FROM amazon_delivery GROUP BY `Area`;
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/97108c47-7bf4-4017-b0a6-71a3fd3e93d9)
-
-
-
-Analiza wpływu pogody i ruchu drogowego na czas dostawy:
-
-SELECT `Weather`, `Trafic`, AVG(`Delivery_Time`) as Avg_Delivery_Time
-FROM amazon_delivery
-GROUP BY `Weather`, `Trafic`
-ORDER BY `Avg_Delivery_Time` DESC;
-
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/d9db94d4-a6e7-40bf-8e41-fd3179ae10f3)
-
-najczęściej występujące kombinacje pogody i stanu ruchu dla dostaw, które przekroczyły średni czas dostawy:
+```sql
+-- The most common combinations of weather and traffic conditions for deliveries that exceeded the average delivery time.
 
 WITH AverageDelivery AS (
     SELECT AVG(`Delivery_Time`) as Avg_Delivery_Time
@@ -239,8 +224,15 @@ FROM amazon_delivery, AverageDelivery
 WHERE `Delivery_Time` > `Avg_Delivery_Time`
 GROUP BY `Weather`, `Trafic`
 ORDER BY Occurrences DESC;
+```
+![obraz](https://github.com/user-attachments/assets/99cc95a5-5b79-452f-8d5d-2ea5e0e89844)
 
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/8b5954d2-6832-48cf-b72b-30a1a3d10e81)
+DO ANALIZY
+
+Średnia ocena agenta dla różnych typów pojazdów:
+SELECT `Vehicle`, ROUND(AVG(`Agent_Rating`),2) AS Avg_Agent_Rating FROM amazon_delivery GROUP BY `Vehicle`;
+
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/f0560125-75be-416b-b0bd-0bb7f47b37be)
 
 Analiza korelacji między czasem dostawy a oceną agenta:
 SELECT `Agent_Rating`, ROUND(AVG(Delivery_Time),2) as Avg_Delivery_Time
