@@ -186,7 +186,9 @@ SELECT `Trafic`, COUNT(*) AS Trafic_Count FROM amazon_delivery GROUP BY `Trafic`
 -- The most frequently ordered categories.;
 SELECT `Category`, COUNT(*) AS Category_Count FROM amazon_delivery GROUP BY `Category`;
 ```
-![obraz](https://github.com/user-attachments/assets/4d8752d1-00c5-4709-8493-a3ff166be05f)
+![obraz](https://github.com/user-attachments/assets/4ffa1f59-cb49-4b7e-9ea5-91a6ff92a2a8) ![obraz](https://github.com/user-attachments/assets/1df8d4d0-56f6-4ba5-8a28-96230606350e)
+
+
 
 
 
