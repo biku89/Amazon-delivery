@@ -48,7 +48,7 @@ DELETE FROM amazon_delivery LIMIT 1;
 ```
 
 
-* Performed a few initial queries to check the data and its accuracy; 
+* Performed a few initial queries to check the data and its accuracy:
 
 ```sql
 SELECT COUNT(*) FROM amazon_delivery;
