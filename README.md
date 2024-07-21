@@ -258,8 +258,8 @@ SET
     END,
     
     Delivery_Time_Segment = CASE
-        WHEN `Delivery_Time` < 2 THEN 'Fast_Delivery'
-        WHEN `Delivery_Time` BETWEEN 2 AND 4 THEN 'Average_Delivery'
+        WHEN `Delivery_Time` < 110 THEN 'Fast_Delivery'
+        WHEN `Delivery_Time` BETWEEN 100 AND 170 THEN 'Average_Delivery'
         ELSE 'Slow_Delivery'
     END;
 ```
