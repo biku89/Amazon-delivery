@@ -62,7 +62,7 @@ FROM amazon_delivery
 GROUP BY Order_ID
 HAVING COUNT(*) > 1;
 ```
-* The query results indicated that each record is unique. *
+* The query results indicated that each record is unique. 
 
 *Data validation check:*
 ```sql
