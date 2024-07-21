@@ -175,6 +175,16 @@ ORDER BY
 
 The most frequently chosen vehicle is the motorcycle. However, the best delivery time is achieved by the scooter and van.
 
+```sql
+-- Analysis of the correlation between delivery time and agent rating:
+SELECT `Agent_Rating`, ROUND(AVG(Delivery_Time),2) as Avg_Delivery_Time
+FROM amazon_delivery
+GROUP BY `Agent_Rating`
+ORDER BY `Avg_Delivery_Time`;
+```
+![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/e98b04bc-d260-4c19-af21-950bcca54cbe)
+
+The delivery time significantly impacts the agent's rating.
 
 ```sql
 -- The most frequent weather condition. 
@@ -227,22 +237,10 @@ ORDER BY Occurrences DESC;
 ```
 ![obraz](https://github.com/user-attachments/assets/99cc95a5-5b79-452f-8d5d-2ea5e0e89844)
 
-DO ANALIZY
+The most common combinations of weather and traffic conditions leading to exceeding the average delivery time mainly include fog, cloudy, sandstorms, windy, and stormy weather combined with traffic jams. Traffic jams are by far the most frequent traffic condition significantly impacting delivery delays. Reducing delays may require special attention to traffic and delivery management under adverse weather conditions, especially during traffic jams.
 
-Średnia ocena agenta dla różnych typów pojazdów:
-SELECT `Vehicle`, ROUND(AVG(`Agent_Rating`),2) AS Avg_Agent_Rating FROM amazon_delivery GROUP BY `Vehicle`;
 
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/f0560125-75be-416b-b0bd-0bb7f47b37be)
-
-Analiza korelacji między czasem dostawy a oceną agenta:
-SELECT `Agent_Rating`, ROUND(AVG(Delivery_Time),2) as Avg_Delivery_Time
-FROM amazon_delivery
-GROUP BY `Agent_Rating`
-ORDER BY `Avg_Delivery_Time`;
-
-![obraz](https://github.com/biku89/Amazon-delivery/assets/169537978/e98b04bc-d260-4c19-af21-950bcca54cbe)
-
-Segmentacja klientów na podstawie średniego czasu dostawy i oceny agenta: ogarnij to ! 
+Zrobimy segmentację
 
 
 
