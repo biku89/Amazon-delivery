@@ -240,8 +240,29 @@ ORDER BY Occurrences DESC;
 The most common combinations of weather and traffic conditions leading to exceeding the average delivery time mainly include fog, cloudy, sandstorms, windy, and stormy weather combined with traffic jams. Traffic jams are by far the most frequent traffic condition significantly impacting delivery delays. Reducing delays may require special attention to traffic and delivery management under adverse weather conditions, especially during traffic jams.
 
 
-Zrobimy segmentację
+```sql
+-- Agent Segmentation Based on Ratings and Delivery Time.
 
+-- We create new tables where we will store the data.
+ALTER TABLE amazon_delivery
+ADD COLUMN Agent_Rating_Segment VARCHAR(20),
+ADD COLUMN Delivery_Time_Segment VARCHAR(20);
+
+-- We populate the data based on the classification of agent ratings and delivery time.
+UPDATE amazon_delivery
+SET
+    Agent_Rating_Segment = CASE 
+        WHEN `Agent_Rating` > 4.5 THEN 'High_Rating'
+        WHEN `Agent_Rating` BETWEEN 4.0 AND 4.4 THEN 'Medium_Rating'
+        ELSE 'Low_Rating'
+    END,
+    
+    Delivery_Time_Segment = CASE
+        WHEN `Delivery_Time` < 2 THEN 'Fast_Delivery'
+        WHEN `Delivery_Time` BETWEEN 2 AND 4 THEN 'Average_Delivery'
+        ELSE 'Slow_Delivery'
+    END;
+```
 
 
 
